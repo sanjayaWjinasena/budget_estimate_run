@@ -81,7 +81,7 @@
         ]"/>
     </record>
 
-    <!-- PLACE UNDER: Accounting/Accounting/Management -->
+    <!-- Place Under: Accounting/Accounting/Management -->
     <menuitem id="menu_budget_estimate" 
               name="Budget Estimates" 
               parent="account.menu_finance_entries_management" 

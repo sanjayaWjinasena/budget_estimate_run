@@ -20,15 +20,15 @@ class BudgetEstimate(models.Model):
                                          help="Sum of planned amounts for Expense lines")
     project_value = fields.Float(string='Project Value', readonly=True, 
                                 help="Sum of planned amounts for Revenue lines")
-    # CORRECTED: Store as decimal (0.45), not percentage (45.0)
+    # Store as decimal
     project_completed_percentage = fields.Float(string='Project Completed %', readonly=True, digits=(5, 4),
                                                help="(Actual Expenses / Total Expenses)")
-    # CORRECTED: Store as decimal (0.45), not percentage (45.0)
+    # Store as decimal
     gross_margin_percentage = fields.Float(string='Gross Margin %', readonly=True, digits=(5, 4),
                                           help="(Gross Margin / Estimated Revenue)")
 
     estimated_revenue = fields.Float(string='Estimated Revenue', readonly=True, 
-                                    help="Project Value × Completion %")
+                                    help="(Project Value × Completion %)")
     gross_margin = fields.Float(string='Gross Margin', readonly=True, 
                                help="Estimated Revenue - Actual Expenses")
 

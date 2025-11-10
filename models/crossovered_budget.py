@@ -19,7 +19,7 @@ class CrossoveredBudget(models.Model):
         actual_expenses_incurred = -sum(expense_lines.mapped('practical_amount'))
         actual_invoiced_amount = sum(revenue_lines.mapped('practical_amount'))
 
-        # CORRECTED: Store as decimal (0.45), not percentage (45.0)
+        # Store as decimal
         project_completed_percentage = 0.0
         if total_project_expenses > 0:
             project_completed_percentage = actual_expenses_incurred / total_project_expenses  # Removed * 100
@@ -28,10 +28,10 @@ class CrossoveredBudget(models.Model):
 
         gross_margin = estimated_revenue - actual_expenses_incurred
         
-        # CORRECTED: Store as decimal (0.45), not percentage (45.0)
+        # Store as decimal
         gross_margin_percentage = 0.0
         if estimated_revenue > 0:
-            gross_margin_percentage = gross_margin / estimated_revenue  # Removed * 100
+            gross_margin_percentage = gross_margin / estimated_revenue
 
         vals = {
             'budget_id': self.id,
@@ -49,7 +49,7 @@ class CrossoveredBudget(models.Model):
 
         estimate = self.env['budget.estimate'].create(vals)
         
-        # CORRECTED: Return proper action with breadcrumbs support
+        # Return proper action with breadcrumbs support
         return {
             'type': 'ir.actions.act_window',
             'name': _('Budget Estimate'),
