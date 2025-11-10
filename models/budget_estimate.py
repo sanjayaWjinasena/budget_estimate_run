@@ -20,14 +20,17 @@ class BudgetEstimate(models.Model):
                                          help="Sum of planned amounts for Expense lines")
     project_value = fields.Float(string='Project Value', readonly=True, 
                                 help="Sum of planned amounts for Revenue lines")
-    project_completed_percentage = fields.Float(string='Project Completed %', readonly=True, digits=(16, 4),
-                                               help="(Actual Expenses / Total Expenses) × 100")
+    # CORRECTED: Store as decimal (0.45), not percentage (45.0)
+    project_completed_percentage = fields.Float(string='Project Completed %', readonly=True, digits=(5, 4),
+                                               help="(Actual Expenses / Total Expenses)")
+    # CORRECTED: Store as decimal (0.45), not percentage (45.0)
+    gross_margin_percentage = fields.Float(string='Gross Margin %', readonly=True, digits=(5, 4),
+                                          help="(Gross Margin / Estimated Revenue)")
+
     estimated_revenue = fields.Float(string='Estimated Revenue', readonly=True, 
-                                    help="Project Value × (Completion % / 100)")
+                                    help="Project Value × Completion %")
     gross_margin = fields.Float(string='Gross Margin', readonly=True, 
                                help="Estimated Revenue - Actual Expenses")
-    gross_margin_percentage = fields.Float(string='Gross Margin %', readonly=True, digits=(16, 4),
-                                          help="(Gross Margin / Estimated Revenue) × 100")
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -39,5 +42,5 @@ class BudgetEstimate(models.Model):
 
     def copy(self, default=None):
         default = dict(default or {})
-        default['name'] = 'New'  # Triggers new sequence generation
+        default['name'] = 'New'
         return super().copy(default)

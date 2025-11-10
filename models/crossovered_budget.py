@@ -7,7 +7,6 @@ class CrossoveredBudget(models.Model):
     def action_create_budget_estimate(self):
         self.ensure_one()
         
-        # Validate budget lines exist
         expense_lines = self.crossovered_budget_line.filtered(lambda l: l.general_budget_id.name == 'Expenses')
         revenue_lines = self.crossovered_budget_line.filtered(lambda l: l.general_budget_id.name == 'Revenue')
         
@@ -20,19 +19,20 @@ class CrossoveredBudget(models.Model):
         actual_expenses_incurred = -sum(expense_lines.mapped('practical_amount'))
         actual_invoiced_amount = sum(revenue_lines.mapped('practical_amount'))
 
-        # Calculate percentages and derived values
+        # CORRECTED: Store as decimal (0.45), not percentage (45.0)
         project_completed_percentage = 0.0
         if total_project_expenses > 0:
-            project_completed_percentage = (actual_expenses_incurred / total_project_expenses) * 100.0
+            project_completed_percentage = actual_expenses_incurred / total_project_expenses  # Removed * 100
 
-        estimated_revenue = project_value * (project_completed_percentage / 100.0)
+        estimated_revenue = project_value * project_completed_percentage
 
         gross_margin = estimated_revenue - actual_expenses_incurred
+        
+        # CORRECTED: Store as decimal (0.45), not percentage (45.0)
         gross_margin_percentage = 0.0
         if estimated_revenue > 0:
-            gross_margin_percentage = (gross_margin / estimated_revenue) * 100.0
+            gross_margin_percentage = gross_margin / estimated_revenue  # Removed * 100
 
-        # Round values for clean storage
         vals = {
             'budget_id': self.id,
             'budget_name': self.name,
@@ -47,10 +47,9 @@ class CrossoveredBudget(models.Model):
             'gross_margin_percentage': round(gross_margin_percentage, 4),
         }
 
-        # Create snapshot
         estimate = self.env['budget.estimate'].create(vals)
         
-        # Open the created record
+        # CORRECTED: Return proper action with breadcrumbs support
         return {
             'type': 'ir.actions.act_window',
             'name': _('Budget Estimate'),
@@ -58,5 +57,6 @@ class CrossoveredBudget(models.Model):
             'res_id': estimate.id,
             'view_mode': 'form',
             'target': 'current',
+            'views': [(False, 'form')],
             'context': self.env.context,
         }

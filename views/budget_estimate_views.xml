@@ -69,17 +69,22 @@
         </field>
     </record>
 
-    <!-- Action -->
+    <!-- Action with explicit view_ids for breadcrumbs -->
     <record id="action_budget_estimate" model="ir.actions.act_window">
         <field name="name">Budget Estimates</field>
         <field name="res_model">budget.estimate</field>
         <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_budget_estimate_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_budget_estimate_form')})
+        ]"/>
     </record>
 
-    <!-- Menu under Accounting -->
+    <!-- Place under Accounting > Management -->
     <menuitem id="menu_budget_estimate" 
               name="Budget Estimates" 
-              parent="account.menu_finance" 
+              parent="account.menu_management" 
               action="action_budget_estimate" 
-              sequence="99"/>
+              sequence="10"/>
 </odoo>
