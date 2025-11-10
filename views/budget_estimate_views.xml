@@ -81,10 +81,10 @@
         ]"/>
     </record>
 
-    <!-- Place under Accounting > Management -->
+    <!-- PLACE UNDER: Accounting/Accounting/Management -->
     <menuitem id="menu_budget_estimate" 
               name="Budget Estimates" 
-              parent="account.menu_management" 
+              parent="account.menu_finance_entries_management" 
               action="action_budget_estimate" 
               sequence="10"/>
 </odoo>
