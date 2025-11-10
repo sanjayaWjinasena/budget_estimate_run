@@ -8,7 +8,7 @@
         snapshots based on Revenue/Expenses budget lines.
     """,
     'author': 'Chandika Rathnayake',
-    'depends': ['account_budget_accountancy'],
+    'depends': ['account_budget'],
     'data': [
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
