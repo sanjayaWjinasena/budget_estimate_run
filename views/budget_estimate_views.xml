@@ -76,16 +76,10 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <!-- Main Menu Item - Create top-level menu instead of relying on parent -->
-    <menuitem id="menu_budget_estimate_root" 
-              name="Budget Estimates" 
-              parent="account.menu_finance" 
-              sequence="99"/>
-
-    <!-- Sub Menu -->
+    <!-- Menu under Accounting -->
     <menuitem id="menu_budget_estimate" 
               name="Budget Estimates" 
-              parent="menu_budget_estimate_root" 
+              parent="account.menu_finance" 
               action="action_budget_estimate" 
-              sequence="10"/>
+              sequence="99"/>
 </odoo>

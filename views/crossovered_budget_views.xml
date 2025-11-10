@@ -3,7 +3,7 @@
     <record id="view_crossovered_budget_form_inherit" model="ir.ui.view">
         <field name="name">crossovered.budget.form.inherit</field>
         <field name="model">crossovered.budget</field>
-        <field name="inherit_id" ref="account_budget_accountancy.view_crossovered_budget_form"/>
+        <field name="inherit_id" search="[('model','=','crossovered.budget'),('type','=','form')]" model="ir.ui.view"/>
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
                 <button name="action_create_budget_estimate" 
